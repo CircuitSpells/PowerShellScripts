@@ -7,5 +7,5 @@ function Install-PowerShell {
         return
     }
 
-    winget install Microsoft.PowerShell -e
+    & winget install Microsoft.PowerShell -e
 }

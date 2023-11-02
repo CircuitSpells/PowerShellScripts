@@ -8,7 +8,5 @@ function Disconnect-XboxControllerFromPreviousDevice {
         [Parameter(Mandatory=$false)][string]$ControllerMacAddress = '44:16:22:1a:8b:a7'
     )
     
-    process {
-        & btpair -u -b $ControllerMacAddress
-    }
+    & btpair -u -b $ControllerMacAddress
 }

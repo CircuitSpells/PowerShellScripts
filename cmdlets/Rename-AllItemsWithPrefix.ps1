@@ -6,7 +6,5 @@ function Rename-AllItemsWithPrefix {
         [Parameter(Mandatory=$false)][switch]$Recurse
     )
     
-    process {
-        Get-ChildItem -Path $Path -File -Recurse:$Recurse | Rename-Item -NewName { $Prefix + $_.Name }
-    }
+    Get-ChildItem -Path $Path -File -Recurse:$Recurse | Rename-Item -NewName { $Prefix + $_.Name }
 }

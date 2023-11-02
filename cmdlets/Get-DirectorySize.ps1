@@ -6,24 +6,22 @@ function Get-DirectorySize {
         [Parameter(Mandatory = $false)][switch]$Recurse
     )
 
-    process {
-        $Size = 0
+    $Size = 0
 
-        Get-ChildItem -Path $Path -File -Recurse:$Recurse | ForEach-Object {
-            if($IgnoreFileExtensions -contains $_.Extension) {
-                if ($PSBoundParameters['Verbose']) {
-                    Write-Output "Ignoring $($_.FullName)"
-                }
-            }
-            else {
-                if ($PSBoundParameters['Verbose']) {
-                    Write-Output "Adding $($_.FullName)"
-                }
-                
-                $Size += $_.Length
+    Get-ChildItem -Path $Path -File -Recurse:$Recurse | ForEach-Object {
+        if($IgnoreFileExtensions -contains $_.Extension) {
+            if ($PSBoundParameters['Verbose']) {
+                Write-Output "Ignoring $($_.FullName)"
             }
         }
-        
-        Write-Output "`n$($Size.ToString('N0')) bytes"
+        else {
+            if ($PSBoundParameters['Verbose']) {
+                Write-Output "Adding $($_.FullName)"
+            }
+            
+            $Size += $_.Length
+        }
     }
+    
+    Write-Output "`n$($Size.ToString('N0')) bytes"
 }
