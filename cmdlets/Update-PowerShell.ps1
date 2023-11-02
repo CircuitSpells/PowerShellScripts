@@ -2,7 +2,7 @@ function Update-PowerShell {
     [CmdletBinding()]
     param ()
     
-    if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+    if (-not (Assert-IsAdmin)) {
         Write-Host "This script must be run as an administrator"
         return
     }
