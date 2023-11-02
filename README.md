@@ -1,12 +1,16 @@
-# PowerShell Setup Guide
+# PowerShellScripts
 
-## Profile Setup
+## Setup Guide
+
+Necessary files for setup can be found in the [profile](./profile/) directory.
+
+### Profile Setup
 
 - Copy `Microsoft.PowerShell_profile.ps1` to `C:\Users\<UserName>\Documents\PowerShell\`.
 - Update the line `"<PathToRepo>\PowerShellScripts\MyPowerShellModule.psm1"` to point to this repo.
 - Comment out the reference to oh-my-posh until the next section is complete.
 
-## Terminal Styling with oh-my-posh
+### Terminal Styling with oh-my-posh
 
 Refer to [this page](https://ohmyposh.dev/docs/installation/windows) for up-to-date info on the installation process. As of writing, the installation process is as follows:
 
