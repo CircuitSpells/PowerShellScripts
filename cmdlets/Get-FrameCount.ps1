@@ -1,12 +1,17 @@
 <#
 .DESCRIPTION
-Gets the number of frames in a video file using ffprobe.
+Uses ffprobe to get the number of frames in a video file.
 #>
 function Get-FrameCount {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory=$true)][string]$Path
     )
+
+    if(-not (Get-Command ffprobe -ErrorAction SilentlyContinue)) {
+        Write-Host "ffmpeg not installed. Run the 'Install-FFmpeg' cmdlet to install it."
+        return
+    }
     
     if (!(Test-Path -Path $Path))
     {

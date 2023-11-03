@@ -1,6 +1,6 @@
 <#
 .DESCRIPTION
-Gets the data of a video file relevant to Instagram reels using ffmpeg.
+Uses ffmpeg to get the data of a video file, specifically info relevant to Instagram reels.
 #>
 function Get-Mp4Data {
     [CmdletBinding()]

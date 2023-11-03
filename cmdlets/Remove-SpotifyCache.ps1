@@ -1,3 +1,7 @@
+<#
+.DESCRIPTION
+Removes the Spotify cache. Spotify can sometimes slow down when the cache gets too large.
+#>
 function Remove-SpotifyCache {
     [CmdletBinding()]
     param (

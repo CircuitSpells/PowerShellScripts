@@ -1,3 +1,7 @@
+<#
+.DESCRIPTION
+Puts the computer to sleep.
+#>
 function Invoke-SleepState {
     [CmdletBinding()]
     param ()

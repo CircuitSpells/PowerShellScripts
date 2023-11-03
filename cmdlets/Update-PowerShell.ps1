@@ -1,3 +1,7 @@
+<#
+.DESCRIPTION
+Updates the latest PowerShell version using winget.
+#>
 function Update-PowerShell {
     [CmdletBinding()]
     param ()

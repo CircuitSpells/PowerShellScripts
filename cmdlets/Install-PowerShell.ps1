@@ -1,3 +1,7 @@
+<#
+.DESCRIPTION
+Installs the latest PowerShell version using winget.
+#>
 function Install-PowerShell {
     [CmdletBinding()]
     param()
