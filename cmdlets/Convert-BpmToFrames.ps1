@@ -13,6 +13,6 @@ function Convert-BpmToFrames {
     $SongLength = (60 / $Bpm) * $NumBeats 
     $NumFrames = $SongLength * $FrameRate
     
-    Write-Output "Length: $SongLength seconds"
-    Write-Output "Frame Count: $NumFrames"
+    Write-Host "Length: $SongLength seconds"
+    Write-Host "Frame Count: $NumFrames"
 }
