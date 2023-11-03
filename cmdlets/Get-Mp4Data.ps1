@@ -8,7 +8,7 @@ function Get-Mp4Data {
         [Parameter(Mandatory = $true)][string]$Path
     )
   
-    $Mp4Stats = & ffmpeg -i $Path
+    $Mp4Stats = & ffmpeg -i $Path 2>&1
 
     $ProgressiveScan = ($Mp4Stats | Select-String "Progressive:").Length -gt 0
     $HighProfile = ($Mp4Stats | Select-String "Profile: High").Length -gt 0
