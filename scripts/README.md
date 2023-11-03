@@ -6,5 +6,3 @@ Import-Module .\<NameOfCmdlet>.ps1 -Force
 ```
 
 The cmdlet is now imported and ready to use.
-
-test
