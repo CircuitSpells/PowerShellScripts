@@ -1,6 +1,6 @@
 <#
 .DESCRIPTION
-Compares the files between two different directories
+Compares the files contained in two different directories
 #>
 function Get-DirectoryDiff {
     [CmdletBinding()]
@@ -9,10 +9,11 @@ function Get-DirectoryDiff {
         [Parameter(Mandatory=$True)][string]$PathB
     )
 
-    Write-Host "Warning: I don't know why, but this only works if you run this manually and not as a Cmdlet"
+    $FullPathA = Resolve-Path -Path $PathA
+    $FullPathB = Resolve-Path -Path $PathB
 
-    $PathAFiles = Get-ChildItem -Path $PathA -Recurse | Select-Object -ExpandProperty FullName | ForEach-Object { $_.Substring($PathA.Path.Length) }
-    $PathBFiles = Get-ChildItem -Path $PathB -Recurse | Select-Object -ExpandProperty FullName | ForEach-Object { $_.Substring($PathB.Path.Length) }
+    $PathAFiles = Get-ChildItem -Path $FullPathA -Recurse | Select-Object -ExpandProperty FullName | ForEach-Object { $_.Substring($FullPathA.Path.Length) }
+    $PathBFiles = Get-ChildItem -Path $FullPathB -Recurse | Select-Object -ExpandProperty FullName | ForEach-Object { $_.Substring($FullPathB.Path.Length) }
 
     Write-Host "`nOnly in PathA:"
     Compare-Object -ReferenceObject $PathBFiles -DifferenceObject $PathAFiles | Where-Object { $_.SideIndicator -eq "=>" } | Select-Object -ExpandProperty InputObject
