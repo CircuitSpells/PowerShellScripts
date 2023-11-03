@@ -6,7 +6,7 @@ This repo requires Windows and PowerShell 7 (to check your PowerShell version, o
 
 PowerShell 7 will have ideally  been installed using winget, however that is not necessary unless you'd like to use the `Update-PowerShell` cmdlet. If you have installed PowerShell 7 through other means, you can safely uninstall, then reinstall using the provided `Install-PowerShell` cmdlet.
 
- To install PowerShell 7, open a PowerShell instance *as an admin*, navigate to the [cmdlets](/cmdlets/) directory, and then run the following:
+ To install PowerShell 7, clone this repo, open a PowerShell instance *as an admin*, navigate to this repo's [cmdlets](/cmdlets/) directory, and then run the following:
 ```PowerShell
 Import-Module .\Install-PowerShell
 ```
@@ -20,7 +20,7 @@ Install-PowerShell
 
 ### PowerShell Profile
 
-All cmdlets in this repo's [cmdlets](/cmdlets/) directory can be automatically imported into PowerShell each time a new PowerShell window is opened. This allows for instant access to these cmdlets without having to explicitly import modules or type out long paths to a script.
+All cmdlets in this repo's [cmdlets](/cmdlets/) directory can be automatically imported into PowerShell each time a new PowerShell window is opened. This allows for instant access to those cmdlets without having to explicitly import modules or type out long paths to a script.
 
 To automatically import cmdlets:
 
