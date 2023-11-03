@@ -17,9 +17,9 @@ function Get-DirectoryDiff {
 
     $DirectoryDiff = Compare-Object -ReferenceObject $PathBFiles -DifferenceObject $PathAFiles
 
-    Write-Host "`nOnly in PathA:"
+    Write-Host "`nOnly in ${FullPathA}:"
     $DirectoryDiff | Where-Object { $_.SideIndicator -eq "=>" } | Select-Object -ExpandProperty InputObject
 
-    Write-Host "`nOnly in PathB:"
+    Write-Host "`nOnly in ${FullPathB}:"
     $DirectoryDiff | Where-Object { $_.SideIndicator -eq "<=" } | Select-Object -ExpandProperty InputObject
 }
