@@ -2,7 +2,11 @@
 
 ## Requirements
 
-This repo requires Windows, and PowerShell 7 (ideally installed using winget, however not necessary. If you have installed PowerShell 7 through other means, you can safely uninstall, then reinstall using the provided `Install-PowerShell` cmdlet. This will allow you to use the `Update-PowerShell` cmdlet whenever a PowerShell update occurs). To check your PowerShell version, open a PowerShell window and run `$PSVersionTable`. If your PowerShell version is less than 7, open a PowerShell instance *as an admin*, navigate to the [cmdlets](/cmdlets/) directory, and then run the following:
+This repo requires Windows and PowerShell 7 (to check your PowerShell version, open a PowerShell window and run `$PSVersionTable`).
+
+PowerShell 7 will have ideally  been installed using winget, however that is not necessary unless you'd like to use the `Update-PowerShell` cmdlet. If you have installed PowerShell 7 through other means, you can safely uninstall, then reinstall using the provided `Install-PowerShell` cmdlet.
+
+ To install PowerShell 7, open a PowerShell instance *as an admin*, navigate to the [cmdlets](/cmdlets/) directory, and then run the following:
 ```PowerShell
 Import-Module .\Install-PowerShell
 ```
@@ -60,7 +64,7 @@ oh-my-posh font install
 }
 ```
 - Copy [my-theme.omp.json](profile/my-theme.omp.json) to `C:\Users\<UserName>\AppData\Local\Programs\oh-my-posh\themes\`.
-- Uncomment the reference to oh-my-posh from `C:\Users\<UserName>\Documents\PowerShell\Microsoft.PowerShell_profile.ps1`.
+- Uncomment the reference to `oh-my-posh` from `C:\Users\<UserName>\Documents\PowerShell\Microsoft.PowerShell_profile.ps1`.
 - Restart Terminal.
 
 ## Scripts Directory
