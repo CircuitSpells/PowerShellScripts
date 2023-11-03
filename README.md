@@ -1,25 +1,43 @@
 # PowerShellScripts
 
+## Requirements
+
+This repo requires Windows, and PowerShell 7 (ideally installed using winget, however not necessary. If you have installed PowerShell 7 through other means, you can safely uninstall, then reinstall using the provided `Install-PowerShell` cmdlet. This will allow you to use the `Update-PowerShell` cmdlet whenever a PowerShell update occurs). To check your PowerShell version, open a PowerShell window and run `$PSVersionTable`. If your PowerShell version is less than 7, open a PowerShell instance *as an admin*, navigate to the [cmdlets](/cmdlets/) directory, and then run the following:
+```PowerShell
+Import-Module .\Install-PowerShell
+```
+
+Then run:
+```PowerShell
+Install-PowerShell
+```
+
 ## Setup Guide
 
-Necessary files for setup can be found in the [profile](./profile/) directory.
+### PowerShell Profile
 
-### Profile Setup
+All cmdlets in this repo's [cmdlets](/cmdlets/) directory can be automatically imported into PowerShell each time a new PowerShell window is opened. This allows for instant access to these cmdlets without having to explicitly import modules or type out long paths to a script.
 
-- Copy `Microsoft.PowerShell_profile.ps1` to `C:\Users\<UserName>\Documents\PowerShell\`.
-- Update the line `"<PathToRepo>\PowerShellScripts\MyPowerShellModule.psm1"` to point to this repo.
-- Comment out the reference to oh-my-posh until the next section is complete.
+To automatically import cmdlets:
 
-### Terminal Styling with oh-my-posh
+- Copy [Microsoft.PowerShell_profile.ps1](profile/Microsoft.PowerShell_profile.ps1) to `C:\Users\<UserName>\Documents\PowerShell\`.
+- Open the copied `Microsoft.PowerShell_profile.ps1` file and update `"<PathToRepo>"` to this repo's path.
+- Comment out the line referencing `oh-my-posh` until the next section is complete.
 
-Refer to [this page](https://ohmyposh.dev/docs/installation/windows) for up-to-date info on the installation process. As of writing, the installation process is as follows:
+### A Not-So-Ugly Terminal
+
+Install [Windows Terminal](https://www.microsoft.com/store/productId/9N0DX20HK701?ocid=pdpshare) (it comes automatically with Windows 11). Once installed, open a Terminal window and Navigate to the settings page with `Ctrl + ,`, then set "Default profile" to "PowerShell" (not to be confused with "Windows PowerShell").
+
+The terminal is ugly by default, and can be upgraded with oh-my-posh (if needed, refer to [this page](https://ohmyposh.dev/docs/installation/windows) for up-to-date info on the installation process).
+
+As of writing, the installation process is as follows:
 
 - Install oh-my-posh:
 ```
 winget install JanDeDobbeleer.OhMyPosh -s winget
 ```
-- Close the terminal to add oh-my-posh to  PATH.
-- Open terminal as admin.
+- Close the terminal to add `oh-my-posh` to your system PATH.
+- Open Terminal as admin.
 - Install custom fonts with the following command:
 ```
 oh-my-posh font install
@@ -41,6 +59,6 @@ oh-my-posh font install
     }
 }
 ```
-- Copy `my-theme.omp.json` to `C:\Users\<UserName>\AppData\Local\Programs\oh-my-posh\themes\`
-- Uncomment the reference to oh-my-posh from `Microsoft.PowerShell_profile.ps1`.
-- Restart terminal.
+- Copy [my-theme.omp.json](profile/my-theme.omp.json) to `C:\Users\<UserName>\AppData\Local\Programs\oh-my-posh\themes\`.
+- Uncomment the reference to oh-my-posh from `C:\Users\<UserName>\Documents\PowerShell\Microsoft.PowerShell_profile.ps1`.
+- Restart Terminal.
