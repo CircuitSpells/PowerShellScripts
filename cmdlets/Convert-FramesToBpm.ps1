@@ -1,13 +1,10 @@
-function Convert-FrameToBpm {
+function Convert-FramesToBpm {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory = $true)][float]$NumFrames,
         [Parameter(Mandatory = $true)][int]$NumBeats,
         [Parameter(Mandatory = $false)][int]$FrameRate = 60
     )
-    
-    # $SongLength = (60 / $Bpm) * $NumBeats 
-    # $NumFrames = $SongLength * $FrameRate
 
     $SongLength = $NumFrames / $FrameRate
     $Bpm = 60 / ($SongLength / $NumBeats)
