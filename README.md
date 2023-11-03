@@ -8,7 +8,7 @@ PowerShell 7 will have ideally  been installed using winget, however that is not
 
  To install PowerShell 7, clone this repo, open a PowerShell instance *as an admin*, navigate to this repo's [cmdlets](/cmdlets/) directory, and then run the following:
 ```PowerShell
-Import-Module .\Install-PowerShell
+Import-Module .\Install-PowerShell.ps1
 ```
 
 Then run:
