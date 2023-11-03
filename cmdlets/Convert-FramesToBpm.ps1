@@ -1,3 +1,7 @@
+<#
+.DESCRIPTION
+Returns the BPM of a song synced to a video given the number of frames in the video and number of beats in the song.
+#>
 function Convert-FramesToBpm {
     [CmdletBinding()]
     param (

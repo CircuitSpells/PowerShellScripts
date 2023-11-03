@@ -1,3 +1,7 @@
+<#
+.DESCRIPTION
+Asserts that the current user is an administrator.
+#>
 function Assert-IsAdmin {
     [CmdletBinding()]
     param ()
