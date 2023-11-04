@@ -1,8 +1,8 @@
 <#
 .DESCRIPTION
-Uses mediainfo to get the data of a video file. Optional parameter to extract information relevant to Instagram Reels upload requirements.
+Uses mediainfo to get the metadata of a video file. Optional parameter to extract information relevant to Instagram Reels upload requirements.
 #>
-function Get-Mp4Data {
+function Get-VideoFileMetaData {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory = $true)][string]$Path,
@@ -25,6 +25,11 @@ function Get-Mp4Data {
     Write-Output $Mp4Stats
 
     if($InstagramReelsStats) {
+        if($Path.Substring($Path.Length - 3) -ne "mp4") {
+            Write-Host "Instagram requires an .mp4 file. Run the 'ConvertTo-Mp4' cmdlet to convert the file to .mp4."
+            return
+        }
+
         $ProgressiveScan = ($Mp4Stats | Select-String "Scan type\s*: Progressive").Length -gt 0
         $HighProfile = ($Mp4Stats | Select-String "Format profile\s*: High").Length -gt 0
         $TwoConsecutiveBFrames = ($Mp4Stats | Select-String "bframes=2").Length -gt 0
