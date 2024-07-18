@@ -5,8 +5,7 @@ Restarts Explorer. This script was created to fix a Windows 11 bug where changin
 function Restart-Explorer {
     [CmdletBinding()]
     param ()
-    
+
     Get-Process -Name "explorer" | Stop-Process -Force
-    Start-Sleep -Seconds 3
     & explorer.exe
 }
