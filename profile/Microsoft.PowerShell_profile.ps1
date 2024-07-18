@@ -1,7 +1,9 @@
 # Place this file and Scripts folder in C:\Users\[UserName]\Documents\PowerShell\
 # Place my-theme.omp.json in C:\Users\[UserName]\AppData\Local\Programs\oh-my-posh\themes\
 
-$PathToRepo = "C:\Path\To\PowershellScripts"
+$Username = "<username>"
+$RepoPath = "C:\Users\$Username\source\repos\"
+$PathToRepo = "$RepoPath\Path\To\PowerShellScripts"
 
 oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH/my-theme.omp.json" | Invoke-Expression
 Import-Module "$PathToRepo\StartupModule.psm1" -Force
@@ -11,7 +13,7 @@ Set-Alias -Name gh -Value Get-Help
 function Set-Location-PowerShellScripts { Set-Location "$PathToRepo\cmdlets" }
 Set-Alias -Name cdps -Value 'Set-Location-PowerShellScripts'
 
-function Set-Location-Programming { Set-Location "C:\Users\<username>\source\repos\" }
+function Set-Location-Programming { Set-Location $RepoPath }
 Set-Alias -Name cdprog -Value 'Set-Location-Programming'
 
 function DisplayCmdlets {
