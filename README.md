@@ -26,6 +26,7 @@ To automatically import cmdlets:
 
 - Copy [Microsoft.PowerShell_profile.ps1](profile/Microsoft.PowerShell_profile.ps1) to `C:\Users\<UserName>\Documents\PowerShell\`.
 - Open the copied `Microsoft.PowerShell_profile.ps1` file and update `$PathToRepo` to point to this repo's path.
+- Update `<username>` with your Windows username.
 - Comment out the line referencing `oh-my-posh` until the next section is complete.
 
 ### A Not-So-Ugly Terminal
