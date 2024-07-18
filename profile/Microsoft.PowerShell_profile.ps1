@@ -15,10 +15,11 @@ function Set-Location-Programming { Set-Location "C:\Users\<username>\source\rep
 Set-Alias -Name cdprog -Value 'Set-Location-Programming'
 
 function DisplayCmdlets {
-    Get-ChildItem "$PathToRepo\cmdlets"
-    Write-Output "Custom functions:"
-    Write-Output "    mycmd: List all cmdlets and custom functions"
-    Write-Output "    cdps: cd to PowerShellScripts directory"
-    Write-Output "    cdprog: cd to Programming directory"
+    Get-ChildItem "$PathToRepo\cmdlets" | Where-Object { $_.Extension -eq ".ps1" } | Select-Object -ExpandProperty Name
+    Write-Output ""
+    Write-Output "mycmd: list all cmdlets and custom functions"
+    Write-Output "cdps: cd to PowerShellScripts directory"
+    Write-Output "cdprog: cd to Programming directory"
+    Write-Output "cdmr: cd to MonoRepo"
 }
 Set-Alias -Name mycmd -Value 'DisplayCmdlets'
