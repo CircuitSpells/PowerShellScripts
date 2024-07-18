@@ -17,9 +17,8 @@ Set-Alias -Name cdprog -Value 'Set-Location-Programming'
 function DisplayCmdlets {
     Get-ChildItem "$PathToRepo\cmdlets"
     Write-Output "Custom functions:"
-    Write-Output "    cdps: cd to PowerShellScripts directory"
-    Write-Output "    cdtouch: cd to TouchDesigner directory"
-    Write-Output "    cdprog: cd to Programming directory"
     Write-Output "    mycmd: List all cmdlets and custom functions"
+    Write-Output "    cdps: cd to PowerShellScripts directory"
+    Write-Output "    cdprog: cd to Programming directory"
 }
 Set-Alias -Name mycmd -Value 'DisplayCmdlets'
