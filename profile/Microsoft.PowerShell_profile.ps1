@@ -10,7 +10,7 @@ Import-Module "$PathToRepo\StartupModule.psm1" -Force
 Set-Alias -Name clera -Value Clear-Host
 Set-Alias -Name gh -Value Get-Help
 
-function Set-Location-PowerShellScripts { Set-Location "$PathToRepo\cmdlets" }
+function Set-Location-PowerShellScripts { Set-Location $PathToRepo }
 Set-Alias -Name cdps -Value 'Set-Location-PowerShellScripts'
 
 function Set-Location-Programming { Set-Location $RepoPath }
