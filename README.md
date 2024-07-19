@@ -2,7 +2,7 @@
 
 ## Requirements
 
-This repo requires Windows and PowerShell 7 (to check your PowerShell version, open a PowerShell window and run `$PSVersionTable`).
+This repo requires a Windows OS and PowerShell 7 (to check your PowerShell version, open a PowerShell window and run `$PSVersionTable`).
 
 PowerShell 7 will have ideally  been installed using winget, however that is not necessary unless you'd like to use the `Update-PowerShell` cmdlet. If you have installed PowerShell 7 through other means, you can safely uninstall, then reinstall using the provided `Install-PowerShell` cmdlet.
 
@@ -25,8 +25,7 @@ All cmdlets in this repo's [cmdlets](/cmdlets/) directory can be automatically i
 To automatically import cmdlets:
 
 - Copy [Microsoft.PowerShell_profile.ps1](profile/Microsoft.PowerShell_profile.ps1) to `C:\Users\<UserName>\Documents\PowerShell\`.
-- Open the copied `Microsoft.PowerShell_profile.ps1` file and update `$PathToRepo` to point to this repo's path.
-- Update `<username>` with your Windows username.
+- Open the copied `Microsoft.PowerShell_profile.ps1` file and update `$Username` to your Windows username and `$PathToRepo` to point to this repo's path.
 - Comment out the line referencing `oh-my-posh` until the next section is complete.
 
 ### A Not-So-Ugly Terminal
