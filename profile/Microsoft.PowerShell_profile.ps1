@@ -22,6 +22,5 @@ function DisplayCmdlets {
     Write-Output "mycmd: list all cmdlets and custom functions"
     Write-Output "cdps: cd to PowerShellScripts directory"
     Write-Output "cdprog: cd to Programming directory"
-    Write-Output "cdmr: cd to MonoRepo"
 }
 Set-Alias -Name mycmd -Value 'DisplayCmdlets'
