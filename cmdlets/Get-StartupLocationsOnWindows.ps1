@@ -38,7 +38,7 @@ function Get-StartupLocationsOnWindows {
     Write-Host "`t`t'Automatic (Trigger Start)' services begin after an event, which can include logging in"
     Write-Host "`t`tNote: If a dependency fails to start, the service configured as 'Automatic' may not start either. In some cases, services may not start immediately due to system load or specific conditions that delay their startup"
     Write-Host "`tTo change startup type, right click the service > Properties, then change the 'startup type' dropdown to 'disabled'"
-    Write-Host "`tThese same services are listed in the 'System Configuration' app under the 'Services' tab, and there is a checkbox to hide all Microsoft services, however there is no way to sort or see the startup type"
+    Write-Host "`tYou can find these same services with the Get-Service PowerShell cmdlet"
 
     Write-Host
     Write-Host "Group Policy Editor:"
