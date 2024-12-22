@@ -71,7 +71,7 @@ function ConvertTo-NormalizedAudioFile {
         {
             ".wav"
             {
-                $BitDepth = & ffprobe -v error -select_streams a:0 -show_entries stream=bits_per_raw_sample -of default=noprint_wrappers=1:nokey=1 $Path
+                $BitDepth = & ffprobe -v error -select_streams a:0 -show_entries stream=bits_per_sample -of default=noprint_wrappers=1:nokey=1 $Path
                 $AudioCodec = switch ($BitDepth)
                 {
                     "16" { "pcm_s16le" }
@@ -127,7 +127,7 @@ function ConvertTo-NormalizedAudioFile {
         }
         
         # Print info
-        Write-Output "`nInput Path: $Path"
+        Write-Output "`nInput Path : $Path"
         if ($OverwriteInputFile)
         {
             Write-Output "Output Path: $Path"
@@ -136,7 +136,7 @@ function ConvertTo-NormalizedAudioFile {
         {
             Write-Output "Output Path: $OutputPath"
         }
-        Write-Output "Volume Offset: $VolumeOffset"
+        Write-Output "Volume Offset: $VolumeOffset dB"
 
         # Create the normalized file
         switch ($File.Extension)
@@ -175,6 +175,11 @@ function ConvertTo-NormalizedAudioFile {
 
     end
     {
+        if (-not $ContinueProcessing)
+        {
+            return
+        }
+
         $Stopwatch.Stop()
         Write-Output "`nCompleted processing in $($Stopwatch.Elapsed.Seconds) seconds"
     }
