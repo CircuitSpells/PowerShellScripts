@@ -12,6 +12,8 @@ function ConvertTo-NormalizedAudioFile {
 
     begin
     {
+        $Stopwatch = [System.Diagnostics.Stopwatch]::StartNew()
+
         $ContinueProcessing = $true
 
         if (-not (Get-Command ffmpeg -ErrorAction SilentlyContinue))
@@ -34,16 +36,16 @@ function ConvertTo-NormalizedAudioFile {
             return
         }
 
-        if (-not (Test-Path -Path $Path))
+        if (-not (Test-Path -LiteralPath $Path))
         {
-            Write-Error "File not found"
+            Write-Error "File not found: $Path"
             return
         }
 
-        $File = Get-Item $Path
+        $File = Get-Item -LiteralPath $Path
         if ($File.Extension -ne ".wav" -and $File.Extension -ne ".mp3")
         {
-            Write-Error "The file type $($File.Extension) is not supported"
+            Write-Error "The file type $($File.Extension) is not supported for the file at $Path"
             return
         }
 
@@ -77,7 +79,7 @@ function ConvertTo-NormalizedAudioFile {
                     "32" { "pcm_s32le" }
                     Default
                     {
-                        Write-Error "Unsupported bit depth"
+                        Write-Error "Unsupported bit depth of $BitDepth for the file at $Path"
                         return
                     }
                 }
@@ -90,7 +92,7 @@ function ConvertTo-NormalizedAudioFile {
             }
             default
             {
-                Write-Error "Error: This script does not have a method of acquiring the bit depth / bit rate for $($File.Extension) files. Update this PowerShell cmdlet to support this behavior."
+                Write-Error "Error: This script does not have a method of acquiring the bit depth / bit rate for $($File.Extension) files for the file at $Path"
                 return
             }
         }
@@ -119,22 +121,22 @@ function ConvertTo-NormalizedAudioFile {
         
             if ($Counter -ge $CounterCutoff)
             {
-                Write-Error "All output file names are unavailable: ending process"
+                Write-Error "All output file names are unavailable: ending process for file at $Path"
                 return
             }
         }
         
         # Print info
-        Write-Output "Input Path: $Path"
-        Write-Output "Volume Offset: $VolumeOffset"
+        Write-Output "`nInput Path: $Path"
         if ($OverwriteInputFile)
         {
-            Write-Output "Output Path: $Path`n"
+            Write-Output "Output Path: $Path"
         }
         else
         {
-            Write-Output "Output Path: $OutputPath`n"
+            Write-Output "Output Path: $OutputPath"
         }
+        Write-Output "Volume Offset: $VolumeOffset"
 
         # Create the normalized file
         switch ($File.Extension)
@@ -149,7 +151,7 @@ function ConvertTo-NormalizedAudioFile {
             }
             default
             {
-                Write-Error "Error: This script does not have a method of normalizing $($File.Extension) files. Update this PowerShell cmdlet to support this behavior."
+                Write-Error "Error: This script does not have a method of normalizing $($File.Extension) files for file at $Path"
                 return
             }
         }
@@ -164,9 +166,16 @@ function ConvertTo-NormalizedAudioFile {
             }
             else
             {
-                Write-Error "FFmpeg failed: deleting the temp file at $OutputPath"
+                Write-Error "FFmpeg failed: deleting the temp file at $OutputPath for file at $Path"
                 Remove-Item -Path $OutputPath -Force
+                return
             }
         }
+    }
+
+    end
+    {
+        $Stopwatch.Stop()
+        Write-Output "`nCompleted processing in $($Stopwatch.Elapsed.Seconds) seconds"
     }
 }
