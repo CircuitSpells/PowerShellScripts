@@ -109,6 +109,8 @@ function ConvertTo-NormalizedAudioFile {
             $CounterCutoff = 100
             do
             {
+                # todo: fix bug with repeating normalization on the same folder causing file names such as "input_Normalized_Normalized_1.wav"
+                # maybe remove counter logic, and check if file BaseName ends in "_Normalized" then return
                 $OutputPath = "$($File.DirectoryName)\$($File.BaseName)_Normalized_$Counter$($File.Extension)"
                 if (-not (Test-Path -Path $OutputPath))
                 {
