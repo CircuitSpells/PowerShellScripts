@@ -47,13 +47,18 @@ function ConvertTo-NormalizedAudioFile {
     }
 
     # Get Bit Depth
+    # todo: support mp3 and other audio formats besides wav
     $BitDepth = & ffprobe -v error -select_streams a:0 -show_entries stream=bits_per_raw_sample -of default=noprint_wrappers=1:nokey=1 $Path
     $Codec = switch ($BitDepth)
     {
         "16" { "pcm_s16le" }
         "24" { "pcm_s24le" }
         "32" { "pcm_s32le" }
-        Default { Write-Error "Unsupported bit depth"; exit }
+        Default
+        {
+            Write-Error "Unsupported bit depth"
+            return
+        }
     }
 
     # Get Output Path
