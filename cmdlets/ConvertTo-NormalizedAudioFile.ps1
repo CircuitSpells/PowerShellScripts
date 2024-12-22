@@ -1,30 +1,30 @@
 <#
 .DESCRIPTION
-
+Uses ffmpeg to normalize an audio file to a specified true peak value (default is 0dBFS)
 #>
 function ConvertTo-NormalizedAudioFile {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory=$true)][string]$Path,
         [Parameter(Mandatory=$false)][float]$TargetTruePeak = 0,
-        [Parameter(Mandatory=$false)][switch]$Recurse
+        [Parameter(Mandatory=$false)][switch]$OverwriteInputFile
     )
 
     if (-not (Get-Command ffmpeg -ErrorAction SilentlyContinue))
     {
-        Write-Host "ffmpeg not installed. Run the 'Install-FFmpeg' cmdlet to install it."
+        Write-Error "ffmpeg not installed. Run the 'Install-FFmpeg' cmdlet to install it."
         return
     }
     
     if (!(Test-Path -Path $Path))
     {
-        Write-Host "File not found"
+        Write-Error "File not found"
         return
     }
 
     if ($TargetTruePeak -gt 0)
     {
-        Write-Host "TargetTruePeak must be equal to or less than 0"
+        Write-Error "TargetTruePeak must be equal to or less than 0"
         return
     }
 
@@ -56,15 +56,36 @@ function ConvertTo-NormalizedAudioFile {
         Default { Write-Error "Unsupported bit depth"; exit }
     }
 
-    # $VolumeOffset = ($TruePeak -ge 0) ? 0 : -$TruePeak # TruePeak is negative, so we force the value to positive. If TruePeak is greater than 0, the audio is clipping so in that case force to 0
-    # $Headroom = ($Headroom -ge 0) ? $Headroom : -$Headroom # users can enter either a positive or negative number (the result will be the same), but we force the value to positive
-    # $VolumeOffset -= $Headroom
-
     # Get Output Path
+    $OutputPath
     $File = Get-Item $Path
-    $OutputPath = "$($File.DirectoryName)\$($File.BaseName)_Normalized$($File.Extension)"
-    # todo: add _1 to output name and increment if file exists
-    # todo: add option to overwrite input file
+    if ($OverwriteInputFile)
+    {
+        $Guid = New-Guid
+        $OutputPath = "$($File.DirectoryName)\$($Guid.Guid)$($File.Extension)"
+    }
+    else
+    {
+        $Counter = 1
+        $CounterCutoff = 100
+        do
+        {
+            $OutputPath = "$($File.DirectoryName)\$($File.BaseName)_Normalized_$Counter$($File.Extension)"
+            if (!(Test-Path -Path $OutputPath))
+            {
+                break
+            }
+    
+            Write-Output "$OutputPath exists, incrementing counter"
+            $Counter++
+        } while ($Counter -lt $CounterCutoff)
+    
+        if ($Counter -ge $CounterCutoff)
+        {
+            Write-Error "All output file names are unavailable: ending process"
+            return
+        }
+    }
     
     # Print Info
     Write-Output "Input Path:" $Path
@@ -72,6 +93,19 @@ function ConvertTo-NormalizedAudioFile {
     Write-Output "Output Path: $OutputPath"
 
     # Create Normalized File
-    # todo: add back 2>$null
-    & ffmpeg -y -i $Path -af $VolumeOffsetString -c:a $Codec $OutputPath
+    & ffmpeg -y -i $Path -af $VolumeOffsetString -c:a $Codec $OutputPath 2>$null
+
+    if ($OverwriteInputFile)
+    {
+        if ($LASTEXITCODE -eq 0) # Check if FFmpeg succeeded
+        {
+            Remove-Item -Path $Path -Force
+            Rename-Item -Path $OutputPath -NewName $File.FullName
+        }
+        else
+        {
+            Write-Error "FFmpeg failed: deleting temp file"
+            Remove-Item -Path $OutputPath -Force
+        }
+    }
 }
