@@ -16,7 +16,7 @@ function ConvertTo-NormalizedAudioFile {
         return
     }
     
-    if (!(Test-Path -Path $Path))
+    if (-not (Test-Path -Path $Path))
     {
         Write-Error "File not found"
         return
@@ -25,6 +25,13 @@ function ConvertTo-NormalizedAudioFile {
     if ($TargetTruePeak -gt 0)
     {
         Write-Error "TargetTruePeak must be equal to or less than 0"
+        return
+    }
+
+    $File = Get-Item $Path
+    if ($File.Extension -ne ".wav" -and $File.Extension -ne ".mp3")
+    {
+        Write-Error "The file type $($File.Extension) is not supported"
         return
     }
 
@@ -46,24 +53,41 @@ function ConvertTo-NormalizedAudioFile {
         $VolumeOffsetString = "volume=-$($VolumeOffset)dB"
     }
 
-    # Get Bit Depth
-    # todo: support mp3 and other audio formats besides wav
-    $BitDepth = & ffprobe -v error -select_streams a:0 -show_entries stream=bits_per_raw_sample -of default=noprint_wrappers=1:nokey=1 $Path
-    $Codec = switch ($BitDepth)
+    # Get Bit Depth / Bit Rate
+    $AudioCodec
+    $BitRate
+    switch ($File.Extension)
     {
-        "16" { "pcm_s16le" }
-        "24" { "pcm_s24le" }
-        "32" { "pcm_s32le" }
-        Default
+        ".wav"
         {
-            Write-Error "Unsupported bit depth"
+            $BitDepth = & ffprobe -v error -select_streams a:0 -show_entries stream=bits_per_raw_sample -of default=noprint_wrappers=1:nokey=1 $Path
+            $AudioCodec = switch ($BitDepth)
+            {
+                "16" { "pcm_s16le" }
+                "24" { "pcm_s24le" }
+                "32" { "pcm_s32le" }
+                Default
+                {
+                    Write-Error "Unsupported bit depth"
+                    return
+                }
+            }
+        }
+        ".mp3"
+        {
+            $BitRate = & ffprobe -v error -show_entries format=bit_rate -of default=noprint_wrappers=1:nokey=1 $Path
+            $BitRate = [Math]::Round([int]$BitRate / 1000) # convert from bps to kbps
+            $BitRate = "$($BitRate)k" # convert to string for ffmpeg
+        }
+        default
+        {
+            Write-Error "Error: This script does not have a method of acquiring the bit depth / bit rate for $($File.Extension) files. Update this PowerShell cmdlet to support this behavior."
             return
         }
     }
 
     # Get Output Path
     $OutputPath
-    $File = Get-Item $Path
     if ($OverwriteInputFile)
     {
         $Guid = New-Guid
@@ -76,7 +100,7 @@ function ConvertTo-NormalizedAudioFile {
         do
         {
             $OutputPath = "$($File.DirectoryName)\$($File.BaseName)_Normalized_$Counter$($File.Extension)"
-            if (!(Test-Path -Path $OutputPath))
+            if (-not (Test-Path -Path $OutputPath))
             {
                 break
             }
@@ -93,12 +117,34 @@ function ConvertTo-NormalizedAudioFile {
     }
     
     # Print Info
-    Write-Output "Input Path:" $Path
+    Write-Output "Input Path: $Path"
     Write-Output "Volume Offset: $VolumeOffset"
-    Write-Output "Output Path: $OutputPath"
+    if ($OverwriteInputFile)
+    {
+        Write-Output "Output Path: $Path"
+    }
+    else
+    {
+        Write-Output "Output Path: $OutputPath"
+    }
 
     # Create Normalized File
-    & ffmpeg -y -i $Path -af $VolumeOffsetString -c:a $Codec $OutputPath 2>$null
+    switch ($File.Extension)
+    {
+        ".wav"
+        {
+            & ffmpeg -y -i $Path -af $VolumeOffsetString -c:a $AudioCodec $OutputPath 2>$null
+        }
+        ".mp3"
+        {
+            & ffmpeg -y -i $Path -af $VolumeOffsetString -b:a $BitRate $OutputPath 2>$null
+        }
+        default
+        {
+            Write-Error "Error: This script does not have a method of normalizing $($File.Extension) files. Update this PowerShell cmdlet to support this behavior."
+            return
+        }
+    }
 
     if ($OverwriteInputFile)
     {
@@ -109,7 +155,7 @@ function ConvertTo-NormalizedAudioFile {
         }
         else
         {
-            Write-Error "FFmpeg failed: deleting temp file"
+            Write-Error "FFmpeg failed: deleting the temp file at $OutputPath"
             Remove-Item -Path $OutputPath -Force
         }
     }
