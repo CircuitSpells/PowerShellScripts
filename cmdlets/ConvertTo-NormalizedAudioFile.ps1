@@ -1,12 +1,12 @@
 <#
 .DESCRIPTION
-Uses ffmpeg to normalize an audio file to a specified true peak value (default is 0dBFS)
+Uses ffmpeg to normalize an audio file to a specified true peak value in dBFS
 #>
 function ConvertTo-NormalizedAudioFile {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory=$true)][string]$Path,
-        [Parameter(Mandatory=$false)][float]$TargetTruePeak = 0,
+        [Parameter(Mandatory=$false)][float]$TargetTruePeak = 0, # True peak in dBFS
         [Parameter(Mandatory=$false)][switch]$OverwriteInputFile
     )
 
@@ -35,7 +35,7 @@ function ConvertTo-NormalizedAudioFile {
         return
     }
 
-    # Get Volume Offset
+    # Get volume offset
     $AudioAnalysis = ffmpeg -i $Path -af loudnorm=print_format=json -f null - 2>&1 | Out-String
     $Pattern = '"input_tp" : "(-?\d+\.\d+)"'
     $Match = $AudioAnalysis | Select-String -Pattern $Pattern
@@ -53,9 +53,9 @@ function ConvertTo-NormalizedAudioFile {
         $VolumeOffsetString = "volume=-$($VolumeOffset)dB"
     }
 
-    # Get Bit Depth / Bit Rate
-    $AudioCodec
-    $BitRate
+    # Get bit rate
+    $AudioCodec # For wav files (bit rate can be implied by the bit depth and the codec will change depending on the bit depth)
+    $BitRate # For mp3 files
     switch ($File.Extension)
     {
         ".wav"
@@ -78,6 +78,7 @@ function ConvertTo-NormalizedAudioFile {
             $BitRate = & ffprobe -v error -show_entries format=bit_rate -of default=noprint_wrappers=1:nokey=1 $Path
             $BitRate = [Math]::Round([int]$BitRate / 1000) # convert from bps to kbps
             $BitRate = "$($BitRate)k" # convert to string for ffmpeg
+            Write-Output "Bit Rate: $BitRate"
         }
         default
         {
@@ -86,7 +87,7 @@ function ConvertTo-NormalizedAudioFile {
         }
     }
 
-    # Get Output Path
+    # Get output path
     $OutputPath
     if ($OverwriteInputFile)
     {
@@ -116,7 +117,7 @@ function ConvertTo-NormalizedAudioFile {
         }
     }
     
-    # Print Info
+    # Print info
     Write-Output "Input Path: $Path"
     Write-Output "Volume Offset: $VolumeOffset"
     if ($OverwriteInputFile)
@@ -128,7 +129,7 @@ function ConvertTo-NormalizedAudioFile {
         Write-Output "Output Path: $OutputPath"
     }
 
-    # Create Normalized File
+    # Create the normalized file
     switch ($File.Extension)
     {
         ".wav"
@@ -146,6 +147,7 @@ function ConvertTo-NormalizedAudioFile {
         }
     }
 
+    # Cleanup if overwriting the input file
     if ($OverwriteInputFile)
     {
         if ($LASTEXITCODE -eq 0) # Check if FFmpeg succeeded
