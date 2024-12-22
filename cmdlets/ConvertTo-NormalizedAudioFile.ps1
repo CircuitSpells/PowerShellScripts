@@ -12,21 +12,28 @@ function ConvertTo-NormalizedAudioFile {
 
     begin
     {
+        $ContinueProcessing = $true
+
         if (-not (Get-Command ffmpeg -ErrorAction SilentlyContinue))
         {
             Write-Error "ffmpeg not installed. Run the 'Install-FFmpeg' cmdlet to install it."
-            return
+            $ContinueProcessing = $false
         }
 
         if ($TargetTruePeak -gt 0)
         {
             Write-Error "TargetTruePeak must be equal to or less than 0"
-            return
+            $ContinueProcessing = $false
         }
     }
 
     process
     {
+        if (-not $ContinueProcessing)
+        {
+            return
+        }
+
         if (-not (Test-Path -Path $Path))
         {
             Write-Error "File not found"
