@@ -25,7 +25,7 @@ function Get-NewCommits {
     }
 
     $Range = "$SourceBranch..$TargetBranch" # Workaround to ignore the PowerShell ".." syntax
-    $Output = & git log $Range --oneline --color=always
+    $Output = & git log $Range --oneline
 
     if (-not $Output) {
         Write-Error "No output returned from git. Ensure SourceBranch is a predecessor to the TargetBranch."
