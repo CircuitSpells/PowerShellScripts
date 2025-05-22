@@ -21,7 +21,10 @@ function ConvertTo-ReleaseNotes {
 
         [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
-        [string] $OutputPath = '.'
+        [string] $OutputPath = '.',
+
+        [Parameter(Mandatory = $false)]
+        [switch] $ReverseOrder
     )
 
     begin {
@@ -30,7 +33,7 @@ function ConvertTo-ReleaseNotes {
     }
 
     process {
-        if($InputObject -match $Pattern) {
+        if ($InputObject -match $Pattern) {
             $Messages += $Matches[1] # $Matches is an automatic variable created from the -match operator
         }
         else {
@@ -45,6 +48,9 @@ function ConvertTo-ReleaseNotes {
         }
 
         $Output = "# Release Notes`n`n"
+        if ($ReverseOrder) {
+            [array]::Reverse($Messages) # Reverse order so that items are sorted chronologically
+        }
         $Messages | ForEach-Object {
             $Output += "- $_`n"
         }
