@@ -1,6 +1,6 @@
 <#
 .DESCRIPTION
-Renames files in a directory with custom criteria. Edit this script as needed.
+    Renames files in a directory with custom criteria. Edit this script as needed.
 #>
 function Rename-FilesWithCustomCriteria {
     [CmdletBinding()]

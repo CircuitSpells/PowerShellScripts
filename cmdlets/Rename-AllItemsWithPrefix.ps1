@@ -1,6 +1,6 @@
 <#
 .DESCRIPTION
-Renames all items in a directory with a prefix.
+    Renames all items in a directory with a prefix.
 #>
 function Rename-AllItemsWithPrefix {
     [CmdletBinding()]

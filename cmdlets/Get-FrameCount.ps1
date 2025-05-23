@@ -1,6 +1,6 @@
 <#
 .DESCRIPTION
-Uses ffprobe to get the number of frames in a video file.
+    Uses ffprobe to get the number of frames in a video file.
 #>
 function Get-FrameCount {
     [CmdletBinding()]

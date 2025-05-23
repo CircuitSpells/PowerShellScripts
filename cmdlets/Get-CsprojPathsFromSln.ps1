@@ -1,6 +1,6 @@
 <#
 .DESCRIPTION
-Returns the relative paths to all csproj files referenced in an sln file.
+    Returns the relative paths to all csproj files referenced in an sln file.
 #>
 function Get-CsprojPathsFromSln {
     [CmdletBinding()]

@@ -1,6 +1,6 @@
 <#
 .DESCRIPTION
-Installs ffmpeg using winget.
+    Installs ffmpeg using winget.
 #>
 function Install-FFmpeg {
     [CmdletBinding()]

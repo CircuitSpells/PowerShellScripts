@@ -1,6 +1,6 @@
 <#
 .DESCRIPTION
-Find if a verb exists in the list of approved PowerShell verbs.
+    Find if a verb exists in the list of approved PowerShell verbs.
 #>
 function Find-Verb {
     [CmdletBinding()]

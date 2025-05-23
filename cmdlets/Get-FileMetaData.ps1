@@ -1,6 +1,6 @@
 <#
 .DESCRIPTION
-Uses mediainfo to get the metadata of a file. Optional parameter to extract information relevant to Instagram Reels upload requirements.
+    Uses mediainfo to get the metadata of a file. Optional parameter to extract information relevant to Instagram Reels upload requirements.
 #>
 function Get-FileMetaData {
     [CmdletBinding()]

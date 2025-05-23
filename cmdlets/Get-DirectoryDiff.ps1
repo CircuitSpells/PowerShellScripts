@@ -1,6 +1,6 @@
 <#
 .DESCRIPTION
-Compares the files contained in two different directories
+    Compares the files contained in two different directories
 #>
 function Get-DirectoryDiff {
     [CmdletBinding()]

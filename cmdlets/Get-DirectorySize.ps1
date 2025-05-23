@@ -1,6 +1,6 @@
 <#
 .DESCRIPTION
-Gets the size of a directory in bytes. Optionally allows for ignoring files with certain extensions. Use the -Verbose switch to see which files are being ignored.
+    Gets the size of a directory in bytes. Optionally allows for ignoring files with certain extensions. Use the -Verbose switch to see which files are being ignored.
 #>
 function Get-DirectorySize {
     [CmdletBinding()]

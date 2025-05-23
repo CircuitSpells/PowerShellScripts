@@ -1,6 +1,6 @@
 <#
 .DESCRIPTION
-Uses ffmpeg to normalize an audio file to a specified true peak value in dBFS
+    Uses ffmpeg to normalize an audio file to a specified true peak value in dBFS
 #>
 function ConvertTo-NormalizedAudioFile {
     [CmdletBinding()]

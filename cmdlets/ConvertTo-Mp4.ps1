@@ -1,6 +1,6 @@
 <#
 .DESCRIPTION
-Uses ffmpeg to convert a video file to .mp4 without changing the video's codec. This process is known as "demuxing", which means that the video file's *container* format changes (such as .mov to .mp4), but not the video file's *codec* (such as h.264 or MPEG-2 Part 2). This cmdlet has currently only been tested with .mov files with the "MPEG 4 Part 2" codec.
+    Uses ffmpeg to convert a video file to .mp4 without changing the video's codec. This process is known as "demuxing", which means that the video file's *container* format changes (such as .mov to .mp4), but not the video file's *codec* (such as h.264 or MPEG-2 Part 2). This cmdlet has currently only been tested with .mov files with the "MPEG 4 Part 2" codec.
 #>
 function ConvertTo-Mp4 {
     [CmdletBinding()]

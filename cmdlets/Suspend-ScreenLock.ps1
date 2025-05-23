@@ -1,6 +1,6 @@
 <#
 .DESCRIPTION
-Suspends the screen lock by sending a F15 keypress every minute.
+    Suspends the screen lock by sending a F15 keypress every minute.
 #>
 function Suspend-ScreenLock {
     [CmdletBinding()]

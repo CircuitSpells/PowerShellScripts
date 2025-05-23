@@ -1,6 +1,6 @@
 <#
 .DESCRIPTION
-Restarts the terminal session in the current directory. Useful to quickly import new and updated cmdlets from the 'PowerShellScripts\cmdlets' directory.
+    Restarts the terminal session in the current directory. Useful to quickly import new and updated cmdlets from the 'PowerShellScripts\cmdlets' directory.
 #>
 function Restart-Terminal {
     [CmdletBinding()]

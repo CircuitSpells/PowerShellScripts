@@ -1,6 +1,6 @@
 <#
 .DESCRIPTION
-Returns the number of frames in a video that is synced to a song given the song's BPM and the total number of beats.
+    Returns the number of frames in a video that is synced to a song given the song's BPM and the total number of beats.
 #>
 function Convert-BpmToFrames {
     [CmdletBinding()]

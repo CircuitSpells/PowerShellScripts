@@ -1,6 +1,6 @@
 <#
 .DESCRIPTION
-Installs MediaInfo using winget.
+    Installs MediaInfo using winget.
 #>
 function Install-MediaInfo {
     [CmdletBinding()]

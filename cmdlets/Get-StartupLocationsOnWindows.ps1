@@ -1,6 +1,6 @@
 <#
 .DESCRIPTION
-Lists all startup locations on Windows
+    Lists all startup locations on Windows
 #>
 function Get-StartupLocationsOnWindows {
     [CmdletBinding()]
