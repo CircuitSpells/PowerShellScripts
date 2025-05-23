@@ -8,6 +8,8 @@ function Remove-SpotifyCache {
         [Parameter(Mandatory=$false)][string]$UserName = $env:USERNAME
     )
 
-    Get-ChildItem "C:\Users\$UserName\AppData\Local\Spotify\Data\" | Remove-Item  -Recurse -Force
-    Write-Host "Spotify cache deleted"
+    $Path = "C:\Users\$UserName\AppData\Local\Spotify\Data\"
+
+    Get-ChildItem $Path | Remove-Item  -Recurse -Force
+    Write-Host "Spotify cache deleted at $Path"
 }
