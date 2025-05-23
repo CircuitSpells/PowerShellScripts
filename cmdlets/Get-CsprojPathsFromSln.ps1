@@ -9,7 +9,7 @@ function Get-CsprojPathsFromSln {
         [Parameter(Mandatory=$false)][string]$PackageToFind
     )
 
-    Write-Output "Note: this script requires nuget-tree: npm install -g nuget-tree`n"
+    Write-Host "Note: this script requires nuget-tree: npm install -g nuget-tree`n"
     
     $CallingDirectory = Get-Location
     $SlnDirectory = Resolve-Path $SolutionPath | Split-Path
@@ -26,7 +26,7 @@ function Get-CsprojPathsFromSln {
       }
     } |
     ForEach-Object {
-        Write-Output $_.File
+        Write-Host $_.File
         $RelativeCsProjDirectory = Split-Path $_.File
         $FullPath = $SlnDirectory + "\" + $RelativeCsprojDirectory
         Set-Location $FullPath

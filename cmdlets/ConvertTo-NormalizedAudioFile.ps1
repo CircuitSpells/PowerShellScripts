@@ -92,7 +92,7 @@ function ConvertTo-NormalizedAudioFile {
             }
             default
             {
-                Write-Error "Error: This script does not have a method of acquiring the bit depth / bit rate for $($File.Extension) files for the file at $Path"
+                Write-Error "This script does not have a method of acquiring the bit depth / bit rate for $($File.Extension) files for the file at $Path"
                 return
             }
         }
@@ -117,7 +117,7 @@ function ConvertTo-NormalizedAudioFile {
                     break
                 }
         
-                Write-Output "$OutputPath exists, incrementing counter"
+                Write-Host "$OutputPath exists, incrementing counter"
                 $Counter++
             } while ($Counter -lt $CounterCutoff)
         
@@ -129,16 +129,16 @@ function ConvertTo-NormalizedAudioFile {
         }
         
         # Print info
-        Write-Output "`nInput Path : $Path"
+        Write-Host "`nInput Path : $Path"
         if ($OverwriteInputFile)
         {
-            Write-Output "Output Path: $Path"
+            Write-Host "Output Path: $Path"
         }
         else
         {
-            Write-Output "Output Path: $OutputPath"
+            Write-Host "Output Path: $OutputPath"
         }
-        Write-Output "Volume Offset: $VolumeOffset dB"
+        Write-Host "Volume Offset: $VolumeOffset dB"
 
         # Create the normalized file
         switch ($File.Extension)
@@ -153,7 +153,7 @@ function ConvertTo-NormalizedAudioFile {
             }
             default
             {
-                Write-Error "Error: This script does not have a method of normalizing $($File.Extension) files for file at $Path"
+                Write-Warning "This script does not have a method of normalizing $($File.Extension) files for file at $Path"
                 return
             }
         }
@@ -183,6 +183,6 @@ function ConvertTo-NormalizedAudioFile {
         }
 
         $Stopwatch.Stop()
-        Write-Output "`nCompleted processing in $($Stopwatch.Elapsed.Seconds) seconds"
+        Write-Host "`nCompleted processing in $($Stopwatch.Elapsed.Seconds) seconds"
     }
 }

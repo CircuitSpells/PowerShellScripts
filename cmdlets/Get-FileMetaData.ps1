@@ -28,12 +28,12 @@ function Get-FileMetaData {
     $JsonLoudnessInfo = $AudioAnalysis.Substring($JsonStart, $JsonEnd - $JsonStart)
     $LoudnessInfo = $JsonLoudnessInfo | ConvertFrom-Json
 
-    Write-Output $FileStats
-    Write-Output "Loudness Info"
-    Write-Output "Integrated Loudness (LUFS)`t`t: $($LoudnessInfo.input_i)"
-    Write-Output "True Peak (dBTP)`t`t`t: $($LoudnessInfo.input_tp)"
-    Write-Output "Loudness Range (LU)`t`t`t: $($LoudnessInfo.input_lra)"
-    Write-Output "Input Threshold`t`t`t`t: $($LoudnessInfo.input_thresh)"
+    Write-Host $FileStats
+    Write-Host "Loudness Info"
+    Write-Host "Integrated Loudness (LUFS)`t`t: $($LoudnessInfo.input_i)"
+    Write-Host "True Peak (dBTP)`t`t`t: $($LoudnessInfo.input_tp)"
+    Write-Host "Loudness Range (LU)`t`t`t: $($LoudnessInfo.input_lra)"
+    Write-Host "Input Threshold`t`t`t`t: $($LoudnessInfo.input_thresh)"
 
     if ($InstagramReelsStats) {
 

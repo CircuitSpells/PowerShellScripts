@@ -18,9 +18,9 @@ Set-Alias -Name cdprog -Value 'Set-Location-Programming'
 
 function DisplayCmdlets {
     Get-ChildItem "$PathToRepo\cmdlets" | Where-Object { $_.Extension -eq ".ps1" } | Select-Object -ExpandProperty Name
-    Write-Output ""
-    Write-Output "mycmd: list all cmdlets and custom functions"
-    Write-Output "cdps: cd to PowerShellScripts directory"
-    Write-Output "cdprog: cd to Programming directory"
+    Write-Host ""
+    Write-Host "mycmd: list all cmdlets and custom functions"
+    Write-Host "cdps: cd to PowerShellScripts directory"
+    Write-Host "cdprog: cd to Programming directory"
 }
 Set-Alias -Name mycmd -Value 'DisplayCmdlets'
