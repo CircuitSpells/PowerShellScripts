@@ -1,26 +1,27 @@
 # PowerShellScripts
 
-Note: this repo has only been tested on Windows.
+Note: the cmdlets in this repo have only been tested on Windows.
 
 ## Setup Guide
 
-## Install PowerShell 7
+### Install PowerShell 7
 
-This repo requires PowerShell 7 (check your PowerShell version with `$PSVersionTable`). To install PowerShell 7, clone this repo, open a PowerShell 5 terminal, navigate to this repo's [cmdlets](/cmdlets/) directory, and then run the following:
+This repo requires PowerShell 7 (check your PowerShell version with `$PSVersionTable`). To install PowerShell 7, open a PowerShell 5 terminal and run:
 
 ```PowerShell
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-Import-Module .\Install-PowerShell.ps1 -Force
-Install-PowerShell
+winget install --id Microsoft.Powershell
 ```
 
 ### Auto-Import Cmdlets
 
 To automatically import this repo's cmdlets into each PowerShell session:
 
-- Open your PowerShell profile with VS Code: `code $PROFILE`, or open it manually at `C:\Users\<username>\Documents\PowerShell\Microsoft.PowerShell_profile.ps1`.
+- Clone this repo.
+- Open your PowerShell profile with VS Code: `code $PROFILE`
+  - Or open it manually at `C:\Users\<username>\Documents\PowerShell\Microsoft.PowerShell_profile.ps1`.
 - Copy the contents of this repo's [Microsoft.PowerShell_profile.ps1](profile/Microsoft.PowerShell_profile.ps1) file and paste it into your PowerShell profile.
-- Update the `$Username` variable to your Windows username and `$PathToRepo` to point to this repo's path.
+- Update the `$Username` variable to your Windows username.
+- Update the `$PathToRepo` variable to point to this repo's path.
 - Comment out the line starting with `oh-my-posh` until the next section is complete.
 - In Windows search, open Powershell 7. This repo's cmdlets should now be automatically imported into your session. You can verify by running `mycmd` to see the list of available cmdlets and custom functions.
 
@@ -40,9 +41,7 @@ The terminal is ugly by default, and can be upgraded with oh-my-posh:
 Install-OhMyPosh
 ```
 
-- Close the terminal to add `oh-my-posh` to your system PATH.
-- Open Terminal as admin.
-- Install custom fonts with the following command:
+Once installed, add custom fonts:
 
 ```
 oh-my-posh font install
