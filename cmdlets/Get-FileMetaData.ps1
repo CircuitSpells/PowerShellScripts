@@ -9,8 +9,13 @@ function Get-FileMetaData {
         [Parameter(Mandatory = $false)][switch]$InstagramReelsStats
     )
 
+    if (-not (Get-Command ffmpeg -ErrorAction SilentlyContinue)) {
+        Write-Host "ffmpeg not installed. Run 'Install-FFmpeg' to install it."
+        return
+    }
+
     if (-not (Get-Command mediainfo -ErrorAction SilentlyContinue)) {
-        Write-Host "mediainfo not installed. Run the 'Install-FFmpeg' cmdlet to install it."
+        Write-Host "mediainfo not installed. Run 'Install-MediaInfo' to install it."
         return
     }
 
